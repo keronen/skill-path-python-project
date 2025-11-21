@@ -160,7 +160,10 @@ Exercise 2.4
 What were the 2000th until 2025th orders?
 """
 header_print("Exercise 2.4")
-order_2000_to_2025 = ...
+order_2000_to_2025 = orders_casted[2000:2026]
+for order in order_2000_to_2025:
+    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
+
 
 """
 Exercise 3

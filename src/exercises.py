@@ -151,7 +151,8 @@ Exercise 2.3
 What was the 1000th order?
 """
 header_print("Exercise 2.3")
-order_1000 = ...
+order_1000 = orders_casted[1000]
+print(f"Customer {order_1000[0]} got the haircut {order_1000[4]} on {order_1000[3]} for €{order_1000[5]:.2f}.")
 
 """
 Exercise 2.4

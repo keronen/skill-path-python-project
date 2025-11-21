@@ -141,7 +141,9 @@ Exercise 2.2
 What were the last 5 orders?
 """
 header_print("Exercise 2.2")
-orders_last_5 = ...
+orders_last_5 = orders_casted[-5:]
+for order in orders_last_5:
+    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
 
 """
 Exercise 2.3

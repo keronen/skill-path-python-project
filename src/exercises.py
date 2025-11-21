@@ -178,7 +178,12 @@ then print how many there are in and who they are in this format: "There are ...
 Extra challenge: Try this with a set comprehension!
 """
 header_print("Exercise 3")
-unique_names = list({order[0] for order in orders_casted})
+unique_names = list(
+    {
+        order[0]
+        for order in orders_casted
+    }
+)
 print(f'There are {len(unique_names)} unique names, namely {unique_names}')
 
 """
@@ -194,7 +199,10 @@ Exercise 4.1
 What was the total revenue in the data? Put this in a variable named `total_revenue`.
 """
 header_print("Exercise 4.1")
-total_revenue = ...
+total_revenue = sum(
+    order[5]
+    for order in orders_casted
+)
 
 """
 Exercise 4.2
@@ -202,8 +210,11 @@ Exercise 4.2
 What was the revenue in the month of March 2024? Put this in a variable named `revenue_march_2024`.
 """
 header_print("Exercise 4.2")
-revenue_march_2024 = ...
-
+revenue_march_2024 = sum(
+    order[5]
+    for order in orders_casted
+    if "March 2024" in order[3]
+)
 """
 Exercise 4.3
 ============

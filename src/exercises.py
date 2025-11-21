@@ -52,7 +52,7 @@ As the first step, create a list `orders_strings` where each entry is only the s
 > Example output: ["Martin Adams ,51,M,Monday 01 January 2024,Bald,20", "Victor Barnes,28,M,Monday 01 January 2024,Mohawk,40", ...]
 """
 header_print("Exercise 1.1")
-orders_strings = ...
+orders_strings = data_string.split(";")
 # from .solutions.exercise_1_1 import orders_strings
 
 """
@@ -66,7 +66,10 @@ it `orders_lists`.
 > Example output: [["Martin Adams ", "51", "M", "Monday 01 January 2024", "Bald", "20"], ...]
 """
 header_print("Exercise 1.2")
-orders_lists = ...
+orders_lists = [
+    i.split(',')
+    for i in orders_strings
+]
 # from .solutions.exercise_1_2 import orders_list
 
 """
@@ -81,7 +84,10 @@ and name it `orders_cleaned`.
 > Example output: [["Martin Adams", "51", "M", "Monday 01 January 2024", "Bald", "20"], ...]
 """
 header_print("Exercise 1.3")
-orders_cleaned = ...
+orders_cleaned = [
+    [order[0].strip()] + order[1:]
+    for order in orders_lists
+]
 # from .solutions.exercise_1_3 import orders_cleaned
 
 """

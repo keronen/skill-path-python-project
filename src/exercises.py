@@ -104,7 +104,10 @@ new variable and name it `orders_casted`.
 > Example output: [["Martin Adams", 51, "M", "Monday 01 January 2024", "Bald", 20], ...]
 """
 header_print("Exercise 1.4")
-orders_casted = ...
+orders_casted = [
+    [row[0], int(row[1]), row[2], row[3], row[4], int(row[5])]
+    for row in orders_cleaned
+]
 # from .solutions.exercise_1_4 import orders_casted
 
 """
@@ -127,7 +130,10 @@ Exercise 2.1
 What were the first 3 orders?
 """
 header_print("Exercise 2.1")
-orders_first_3 = ...
+orders_first_3 = orders_casted[0:3]
+
+for order in orders_first_3:
+    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
 
 """
 Exercise 2.2

@@ -178,7 +178,8 @@ then print how many there are in and who they are in this format: "There are ...
 Extra challenge: Try this with a set comprehension!
 """
 header_print("Exercise 3")
-unique_names = ...
+unique_names = list({order[0] for order in orders_casted})
+print(f'There are {len(unique_names)} unique names, namely {unique_names}')
 
 """
 Exercise 4

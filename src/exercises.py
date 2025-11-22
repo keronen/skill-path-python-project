@@ -145,11 +145,13 @@ def clean_orders(orders):
 orders_cleaned, t, m = clean_orders(orders_lists)
 print_stats("Python list method 'str.strip()'", orders_cleaned, t, m, orders_cleaned[:2])
 
+
 # Extra:
 @measure
 def clean_orders_pandas(data_frame):
-    df['name'] = df['name'].str.strip()
-    return df
+    data_frame['name'] = data_frame['name'].str.strip()
+    return data_frame
+
 
 print_stats("Pandas method 'str.strip()'", df, t, m, df.head(2))
 # from .solutions.exercise_1_3 import orders_cleaned
@@ -168,11 +170,27 @@ new variable and name it `orders_casted`.
 > Example output: [["Martin Adams", 51, "M", "Monday 01 January 2024", "Bald", 20], ...]
 """
 header_print("Exercise 1.4")
-orders_casted = [
-    [row[0], int(row[1]), row[2], row[3], row[4], int(row[5])]
-    for row in orders_cleaned
-]
+
+
+@measure
+def casted(orders):
+    return [[row[0], int(row[1]), row[2], row[3], row[4], int(row[5])] for row in orders]
+
+
+orders_casted, t, m = casted(orders_cleaned)
+print_stats("Python method 'list comprehension'", orders_casted, t, m, orders_casted[:2])
+
+
 # from .solutions.exercise_1_4 import orders_casted
+
+@measure
+def casted_pandas(data_frame):
+    data_frame["age"] = data_frame["age"].astype(int)
+    data_frame["price"] = data_frame["price"].astype(int)
+    return data_frame
+
+
+print_stats("Pandas method 'astype()'", df, t, m, df.head(2))
 
 """
 Exercise 2

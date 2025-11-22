@@ -391,7 +391,14 @@ Test the function on the original input, `orders_casted`, and see if you get the
 > "Total revenue: <total_revenue>, Total revenue with function: <total_revenue_function>".
 """
 header_print("Exercise 5.1")
-total_revenue_function = ...
+
+
+def total_revenue_function(orders, index=5):
+    return sum(order[index] for order in orders)
+
+
+print(f"Total revenue: {total_revenue:,.2f},"
+      f" Total revenue with function: {total_revenue_function(orders_casted):,.2f}")
 
 """
 Exercise 5.2

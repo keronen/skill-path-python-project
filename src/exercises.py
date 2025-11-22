@@ -413,7 +413,19 @@ result in the following format:
 > "Revenue with scaling factor <scaling_factor> is <total_revenue_scaling_factor>".
 """
 header_print("Exercise 5.2")
-total_revenue_scaling_factor = ...
+
+
+def total_revenue_scaling_factor(orders, scaling_factor, index=5):
+    return sum(order[index] * scaling_factor for order in orders)
+
+
+scaling_factor = 0.95
+orders_casted_scaling_factor = total_revenue_scaling_factor(
+    orders_casted,
+    scaling_factor
+)
+
+print(f"Revenue with scaling factor {scaling_factor} is {orders_casted_scaling_factor:,.2f}")
 
 """
 Exercise 6

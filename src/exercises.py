@@ -274,7 +274,9 @@ header_print("Exercise 4.5")
 HAIRSTYLES = generate_data.HAIRSTYLES
 print(f"{HAIRSTYLES=}")
 
-average_price_haircut = ...
+_, values = zip(*HAIRSTYLES)
+average_price_haircut = sum(values) / len(values)
+print(f"Average price of a haircut: €{average_price_haircut:.2f}.")
 
 """
 Exercise 4.6

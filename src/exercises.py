@@ -322,9 +322,38 @@ Exercise 2.4
 What were the 2000th until 2025th orders?
 """
 header_print("Exercise 2.4")
-order_2000_to_2025 = orders_casted[2000:2026]
-for order in order_2000_to_2025:
-    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
+
+
+@measure
+def print_order_2000_to_2025(orders):
+    o_2000_to_2025 = orders[2000:2026]
+    for o in o_2000_to_2025:
+        print(
+            f"Customer {o[0]} got the haircut {o[4]}"
+            f" on {o[3]} for €{o[5]:.2f}."
+        )
+    return
+
+
+order_2000_to_2025, t, m = print_order_2000_to_2025(orders_casted)
+print_stats("Python method 'slices", orders_casted, t, m)
+
+
+# Extra
+
+@measure
+def print_order_2000_to_2025_pandas(data_frame):
+    rows = df.iloc[2000:2026]
+    for _, row in rows.iterrows():
+        print(
+            f"Customer {row['name']} got the haircut {row['hairstyle']} "
+            f"on {row['date']} for €{row['cost']:.2f}."
+        )
+    return data_frame
+
+
+orders_2000_to_2025_pd, t, m = print_order_2000_to_2025_pandas(df)
+print_stats("Pandas method 'iloc slice'", df, t, m)
 
 """
 Exercise 3

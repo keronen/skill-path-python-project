@@ -164,7 +164,6 @@ order_2000_to_2025 = orders_casted[2000:2026]
 for order in order_2000_to_2025:
     print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
 
-
 """
 Exercise 3
 ==========
@@ -221,8 +220,17 @@ Exercise 4.3
 What was the revenue on Mondays? What about on Sundays? Name these variables `revenue_mondays` and `revenue_sundays`.
 """
 header_print("Exercise 4.3")
-revenue_mondays = ...
-revenue_sundays = ...
+revenue_mondays = sum(
+    order[5]
+    for order in orders_casted
+    if "Monday" in order[3]
+)
+
+revenue_sundays = sum(
+    order[5]
+    for order in orders_casted
+    if "Sunday" in order[3]
+)
 
 """
 Exercise 4.4
@@ -239,9 +247,15 @@ For each gender, print in the following format:
 Extra challenge: try to use only one for-loop to compute the necessary information for all genders.
 """
 header_print("Exercise 4.4")
-revenue_m = ...
-revenue_f = ...
-revenue_x = ...
+
+for gender in ["M", "F", "X"]:
+    orders_g = [i for i in orders_casted if i[2] == gender]
+    revenue = sum(i[5] for i in orders_g)
+    count = len(orders_g)
+    avg = revenue / count if count > 0 else 0
+
+    print(f"Revenue {gender}: €{revenue:,.2f} ({count} clients)."
+          f" Average revenue: €{avg:.2f}.")
 
 """
 Exercise 4.5

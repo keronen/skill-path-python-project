@@ -150,7 +150,7 @@ print_stats("Python list method 'str.strip()'", orders_cleaned, t, m, orders_cle
 @measure
 def clean_orders_pandas(data_frame):
     data_frame['name'] = data_frame['name'].str.strip()
-    return data_frame
+    return
 
 
 print_stats("Pandas method 'str.strip()'", df, t, m, df.head(2))
@@ -186,10 +186,11 @@ print_stats("Python method 'list comprehension'", orders_casted, t, m, orders_ca
 @measure
 def casted_pandas(data_frame):
     data_frame["age"] = data_frame["age"].astype(int)
-    data_frame["price"] = data_frame["price"].astype(int)
-    return data_frame
+    data_frame["cost"] = data_frame["cost"].astype(int)
+    return
 
 
+df_casted, t, m = casted_pandas(df)
 print_stats("Pandas method 'astype()'", df, t, m, df.head(2))
 
 """
@@ -212,10 +213,33 @@ Exercise 2.1
 What were the first 3 orders?
 """
 header_print("Exercise 2.1")
-orders_first_3 = orders_casted[0:3]
 
-for order in orders_first_3:
-    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
+
+@measure
+def print_orders_first_3(orders):
+    for i in orders[:3]:
+        print(f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}.")
+    return
+
+
+orders_first_3, t, m = print_orders_first_3(orders_casted)
+print_stats("Python method 'List slices'", orders_casted, t, m)
+
+
+# Extra:
+@measure
+def print_orders_first_3_pandas(data_frame):
+    first3 = data_frame.head(3)
+    for _, row in first3.iterrows():
+        print(
+            f"Customer {row['name']} got the haircut {row['hairstyle']} "
+            f"on {row['date']} for €{row['cost']:.2f}."
+        )
+    return
+
+
+orders_first_3_pd, t, m = print_orders_first_3_pandas(df)
+print_stats("Pandas method 'Head'", df, t, m)
 
 """
 Exercise 2.2

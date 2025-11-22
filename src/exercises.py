@@ -202,7 +202,7 @@ total_revenue = sum(
     order[5]
     for order in orders_casted
 )
-
+print(f"Revenue: €{total_revenue:,.2f}.")
 """
 Exercise 4.2
 ============
@@ -295,7 +295,13 @@ Print the result in the following format:
 > "Revenue after price change: €<total_revenue_inflation_correction>."
 """
 header_print("Exercise 4.6")
-total_revenue_inflation_correction = ...
+
+total_revenue_inflation_correction = sum(
+    (order[5] * 1.35) if 18 <= order[1] <= 65 else order[5]
+    for order in orders_casted
+)
+print(f"Revenue after price change: €{total_revenue_inflation_correction:,.2f}.")
+
 
 """
 Exercise 4.7
@@ -311,7 +317,8 @@ Print the output in the following format:
 header_print("Exercise 4.7")
 # from .solutions.exercise_4_1 import total_revenue
 # from .solutions.exercise_4_6 import total_revenue_inflation_correction
-revenue_difference = ...
+revenue_difference = total_revenue_inflation_correction - total_revenue
+print(f'Revenue increase after inflation correction: €{revenue_difference:,.2f}.')
 
 """
 Exercise 4.8

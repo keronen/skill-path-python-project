@@ -439,4 +439,18 @@ NB: You can assume the list `orders_casted` is sorted, meaning the first row is 
 the second order, etc.
 """
 header_print("Exercise 6")
-winner = ...
+
+
+def winner_finder(orders):
+    total = 0
+
+    for order in orders:
+        total += order[5]
+
+        if total > 1000:
+            name = order[0]
+            print(f"Reached revenue of €1,000.00. {name} is the lucky one! 🎉")
+            return
+
+
+winner = winner_finder(orders_casted)

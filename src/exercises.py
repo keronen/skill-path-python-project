@@ -349,8 +349,8 @@ Calculate the difference in revenue again. However, this time, calculate the per
 """
 header_print("Exercise 4.9")
 # from .solutions.exercise_4_8 import total_revenue_discount
-revenue_difference_percent = 0
-
+revenue_difference_percent = (((total_revenue_discount - total_revenue) / total_revenue) * 100)
+print(f"Percentual revenue increase after discount: {revenue_difference_percent:.2f}%.")
 """
 Exercise 4.10
 ============
@@ -364,8 +364,14 @@ Calculate the new revenue after without the discount for the Wavy haircut for ju
 > "Revenue after discount (no Wavy): €<total_revenue_discount_no_wavy>."
 """
 header_print("Exercise 4.10")
-total_revenue_discount_no_wavy = ...
-
+total_revenue_discount_no_wavy = sum(
+    order[5] if order[4].lower() == 'wavy'
+    else (order[5] * .9) if order[1] < 18
+    else (order[5] * .95) if order[1] > 65
+    else (order[5] * 1.35)
+    for order in orders_casted
+)
+print(f"Revenue after discount (no Wavy): €{total_revenue_discount_no_wavy:,.2f}.")
 """
 Exercise 5
 ==========

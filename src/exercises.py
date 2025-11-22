@@ -247,9 +247,34 @@ Exercise 2.2
 What were the last 5 orders?
 """
 header_print("Exercise 2.2")
-orders_last_5 = orders_casted[-5:]
-for order in orders_last_5:
-    print(f"Customer {order[0]} got the haircut {order[4]} on {order[3]} for €{order[5]:.2f}.")
+
+@measure
+def print_orders_last_5(orders):
+    for i in orders[-5:]:
+        print(f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}.")
+    return
+
+
+orders_last_5, t, m = print_orders_last_5(orders_casted)
+print_stats("Python method 'List slices'", orders_casted, t, m)
+
+
+# Extra:
+@measure
+def print_orders_last_5_pandas(data_frame):
+    last5 = data_frame.tail(5)
+    for _, row in last5.iterrows():
+        print(
+            f"Customer {row['name']} got the haircut {row['hairstyle']} "
+            f"on {row['date']} for €{row['cost']:.2f}."
+        )
+    return
+
+
+orders_last_5_pd, t, m = print_orders_last_5_pandas(df)
+print_stats("Pandas method 'Tail'", df, t, m)
+
+
 
 """
 Exercise 2.3

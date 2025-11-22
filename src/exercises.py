@@ -9,12 +9,50 @@ Note: these example solutions mention first names instead of full names. This is
 output.
 """
 
+import pandas as pd
+import timeit
+import tracemalloc
 from datetime import date
 
 from faker.typing import SeedType
 
 import generate_data
 from header_print import header_print
+
+import time
+import tracemalloc
+
+
+def measure(func):
+    def wrapper(*args, **kwargs):
+        tracemalloc.start()
+        start = time.perf_counter()
+
+        result = func(*args, **kwargs)
+
+        end = time.perf_counter()
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
+        return result, end - start, peak / (1024 * 1024)
+
+    return wrapper
+
+
+def print_stats(label, obj, time_spent, memory_mb, output_sample=None):
+    print("\n" + "=" * 60)
+    print(label)
+    print("=" * 60)
+    print(f"Type:   {type(obj)}")
+    print(f"Time:   {time_spent:.6f} sec")
+    print(f"Memory: {memory_mb:.3f} MB")
+
+    if output_sample is not None:
+        print("Output:")
+        print(output_sample)
+
+    print("=" * 60 + "\n")
+
 
 """
 We start you off with some random data to parse. Please replace the value of the `your_favourite_food` variable with
@@ -54,6 +92,7 @@ As the first step, create a list `orders_strings` where each entry is only the s
 header_print("Exercise 1.1")
 orders_strings = data_string.split(";")
 # from .solutions.exercise_1_1 import orders_strings
+print(orders_strings[:2])
 
 """
 Exercise 1.2
@@ -66,12 +105,24 @@ it `orders_lists`.
 > Example output: [["Martin Adams ", "51", "M", "Monday 01 January 2024", "Bald", "20"], ...]
 """
 header_print("Exercise 1.2")
-orders_lists = [
-    i.split(',')
-    for i in orders_strings
-]
+
+
+def spit_to_lists(orders):
+    return [i.split(',') for i in orders_strings]
+
+
+orders_lists = spit_to_lists(orders_strings)
 # from .solutions.exercise_1_2 import orders_list
 
+# Extra Exercises
+# Split into customers and orders Datasets
+df = pd.DataFrame(orders_lists, columns=["name", "age", "gender", "date", "hairstyle", "cost"])
+
+print(f'The output for a type: {type(orders_lists)}')
+print(orders_lists[:2])
+print()
+print(f'The output for a type: {type(df)}')
+print(df.head(2))
 """
 Exercise 1.3
 ============
@@ -84,10 +135,23 @@ and name it `orders_cleaned`.
 > Example output: [["Martin Adams", "51", "M", "Monday 01 January 2024", "Bald", "20"], ...]
 """
 header_print("Exercise 1.3")
-orders_cleaned = [
-    [order[0].strip()] + order[1:]
-    for order in orders_lists
-]
+
+
+@measure
+def clean_orders(orders):
+    return [[order[0].strip()] + order[1:] for order in orders]
+
+
+orders_cleaned, t, m = clean_orders(orders_lists)
+print_stats("Python list method 'str.strip()'", orders_cleaned, t, m, orders_cleaned[:2])
+
+# Extra:
+@measure
+def clean_orders_pandas(data_frame):
+    df['name'] = df['name'].str.strip()
+    return df
+
+print_stats("Pandas method 'str.strip()'", df, t, m, df.head(2))
 # from .solutions.exercise_1_3 import orders_cleaned
 
 """
@@ -401,6 +465,8 @@ header_print("Exercise 5.1")
 
 def calculate_revenue(orders, index=5):
     return sum(order[index] for order in orders)
+
+
 total_revenue_function = calculate_revenue(orders_casted)
 
 print(f"Total revenue: {total_revenue:,.2f},"

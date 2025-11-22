@@ -118,10 +118,14 @@ orders_lists = spit_to_lists(orders_strings)
 # Split into customers and orders Datasets
 df = pd.DataFrame(orders_lists, columns=["name", "age", "gender", "date", "hairstyle", "cost"])
 
-print(f'The output for a type: {type(orders_lists)}')
+print(
+    f'The output for a type: {type(orders_lists)}'
+)
 print(orders_lists[:2])
 print()
-print(f'The output for a type: {type(df)}')
+print(
+    f'The output for a type: {type(df)}'
+)
 print(df.head(2))
 """
 Exercise 1.3
@@ -139,11 +143,20 @@ header_print("Exercise 1.3")
 
 @measure
 def clean_orders(orders):
-    return [[order[0].strip()] + order[1:] for order in orders]
+    return [
+        [order[0].strip()] + order[1:]
+        for order in orders
+    ]
 
 
 orders_cleaned, t, m = clean_orders(orders_lists)
-print_stats("Python list method 'str.strip()'", orders_cleaned, t, m, orders_cleaned[:2])
+print_stats(
+    "Python list method 'str.strip()'",
+    orders_cleaned,
+    t,
+    m,
+    orders_cleaned[:2]
+)
 
 
 # Extra:
@@ -153,7 +166,13 @@ def clean_orders_pandas(data_frame):
     return
 
 
-print_stats("Pandas method 'str.strip()'", df, t, m, df.head(2))
+print_stats(
+    "Pandas method 'str.strip()'",
+    df,
+    t,
+    m,
+    df.head(2)
+)
 # from .solutions.exercise_1_3 import orders_cleaned
 
 """
@@ -174,11 +193,20 @@ header_print("Exercise 1.4")
 
 @measure
 def casted(orders):
-    return [[row[0], int(row[1]), row[2], row[3], row[4], int(row[5])] for row in orders]
+    return [
+        [row[0], int(row[1]), row[2], row[3], row[4], int(row[5])]
+        for row in orders
+    ]
 
 
 orders_casted, t, m = casted(orders_cleaned)
-print_stats("Python method 'list comprehension'", orders_casted, t, m, orders_casted[:2])
+print_stats(
+    "Python method 'list comprehension'",
+    orders_casted,
+    t,
+    m,
+    orders_casted[:2]
+)
 
 
 # from .solutions.exercise_1_4 import orders_casted
@@ -191,7 +219,13 @@ def casted_pandas(data_frame):
 
 
 df_casted, t, m = casted_pandas(df)
-print_stats("Pandas method 'astype()'", df, t, m, df.head(2))
+print_stats(
+    "Pandas method 'astype()'",
+    df,
+    t,
+    m,
+    df.head(2)
+)
 
 """
 Exercise 2
@@ -225,7 +259,12 @@ def print_orders_first_3(orders):
 
 
 orders_first_3, t, m = print_orders_first_3(orders_casted)
-print_stats("Python method 'List slices'", orders_casted, t, m)
+print_stats(
+    "Python method 'List slices'",
+    orders_casted,
+    t,
+    m
+)
 
 
 # Extra:
@@ -241,7 +280,12 @@ def print_orders_first_3_pandas(data_frame):
 
 
 orders_first_3_pd, t, m = print_orders_first_3_pandas(df)
-print_stats("Pandas method 'Head'", df, t, m)
+print_stats(
+    "Pandas method 'Head'",
+    df,
+    t,
+    m
+)
 
 """
 Exercise 2.2
@@ -261,7 +305,12 @@ def print_orders_last_5(orders):
 
 
 orders_last_5, t, m = print_orders_last_5(orders_casted)
-print_stats("Python method 'List slices'", orders_casted, t, m)
+print_stats(
+    "Python method 'List slices'",
+    orders_casted,
+    t,
+    m
+)
 
 
 # Extra:
@@ -277,7 +326,12 @@ def print_orders_last_5_pandas(data_frame):
 
 
 orders_last_5_pd, t, m = print_orders_last_5_pandas(df)
-print_stats("Pandas method 'Tail'", df, t, m)
+print_stats(
+    "Pandas method 'Tail'",
+    df,
+    t,
+    m
+)
 
 """
 Exercise 2.3
@@ -298,7 +352,12 @@ def print_order_1000(orders):
 
 
 order_1000, t, m = print_order_1000(orders_casted)
-print_stats("Python method 'Slices'", clean_orders, t, m)
+print_stats(
+    "Python method 'Slices'",
+    clean_orders,
+    t,
+    m
+)
 
 
 # Extra
@@ -314,7 +373,12 @@ def print_order_1000_pandas(data_frame):
 
 
 order_1000_pd, t, m = print_order_1000_pandas(df)
-print_stats("Pandas method 'iloc'", df, t, m)
+print_stats(
+    "Pandas method 'iloc'",
+    df,
+    t,
+    m
+)
 
 """
 Exercise 2.4
@@ -336,7 +400,12 @@ def print_order_2000_to_2025(orders):
 
 
 order_2000_to_2025, t, m = print_order_2000_to_2025(orders_casted)
-print_stats("Python method 'slices", orders_casted, t, m)
+print_stats(
+    "Python method 'slices",
+    orders_casted,
+    t,
+    m
+)
 
 
 # Extra
@@ -353,7 +422,12 @@ def print_order_2000_to_2025_pandas(data_frame):
 
 
 orders_2000_to_2025_pd, t, m = print_order_2000_to_2025_pandas(df)
-print_stats("Pandas method 'iloc slice'", df, t, m)
+print_stats(
+    "Pandas method 'iloc slice'",
+    df,
+    t,
+    m
+)
 
 """
 Exercise 3
@@ -368,13 +442,48 @@ then print how many there are in and who they are in this format: "There are ...
 Extra challenge: Try this with a set comprehension!
 """
 header_print("Exercise 3")
-unique_names = list(
-    {
-        order[0]
-        for order in orders_casted
-    }
+
+
+@measure
+def create_unique_names(orders):
+    return list(
+        {
+            order[0]
+            for order in orders
+        }
+    )
+
+
+unique_names, t, m = create_unique_names(orders_casted)
+print(
+    f'There are {len(unique_names)} unique names, namely {unique_names}'
 )
-print(f'There are {len(unique_names)} unique names, namely {unique_names}')
+print()
+print_stats(
+    "Python method 'set comprehension'",
+    clean_orders,
+    t,
+    m
+)
+
+
+# Extra
+@measure
+def create_unique_names_pd(data_frame):
+    return data_frame["name"].unique().tolist()
+
+
+unique_names, t, m = create_unique_names_pd(df)
+print(
+    f'There are {len(unique_names)} unique names, namely {unique_names}'
+)
+print()
+print_stats(
+    "Pandas method 'unique().tolist()'",
+    df,
+    t,
+    m
+)
 
 """
 Exercise 4

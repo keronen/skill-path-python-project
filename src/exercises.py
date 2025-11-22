@@ -151,7 +151,7 @@ Exercise 2.3
 What was the 1000th order?
 """
 header_print("Exercise 2.3")
-order_1000 = orders_casted[1000]
+order_1000 = orders_casted[999]
 print(f"Customer {order_1000[0]} got the haircut {order_1000[4]} on {order_1000[3]} for €{order_1000[5]:.2f}.")
 
 """
@@ -297,7 +297,7 @@ Print the result in the following format:
 header_print("Exercise 4.6")
 
 total_revenue_inflation_correction = sum(
-    (order[5] * 1.35) if 18 <= order[1] <= 65 else order[5]
+    (order[5] * 1.035) if 18 <= order[1] <= 65 else order[5]
     for order in orders_casted
 )
 print(f"Revenue after price change: €{total_revenue_inflation_correction:,.2f}.")
@@ -335,7 +335,7 @@ header_print("Exercise 4.8")
 total_revenue_discount = sum(
     (order[5] * .9) if order[1] < 18 else
     (order[5] * .95) if order[1] > 65 else
-    (order[5] * 1.35)
+    (order[5] * 1.035)
     for order in orders_casted
 )
 print(f"Revenue after discount: €{total_revenue_discount:,.2f}.")
@@ -365,12 +365,18 @@ Calculate the new revenue after without the discount for the Wavy haircut for ju
 """
 header_print("Exercise 4.10")
 total_revenue_discount_no_wavy = sum(
-    order[5] if order[4].lower() == 'wavy'
-    else (order[5] * .9) if order[1] < 18
-    else (order[5] * .95) if order[1] > 65
-    else (order[5] * 1.35)
+    (
+        order[5]
+        if order[1] < 18 and order[4].lower() == "wavy"
+        else order[5] * 0.9
+        if order[1] < 18
+        else order[5] * 0.95
+        if order[1] > 65
+        else order[5] * 1.035
+    )
     for order in orders_casted
 )
+
 print(f"Revenue after discount (no Wavy): €{total_revenue_discount_no_wavy:,.2f}.")
 """
 Exercise 5
@@ -393,12 +399,12 @@ Test the function on the original input, `orders_casted`, and see if you get the
 header_print("Exercise 5.1")
 
 
-def total_revenue_function(orders, index=5):
+def calculate_revenue(orders, index=5):
     return sum(order[index] for order in orders)
-
+total_revenue_function = calculate_revenue(orders_casted)
 
 print(f"Total revenue: {total_revenue:,.2f},"
-      f" Total revenue with function: {total_revenue_function(orders_casted):,.2f}")
+      f" Total revenue with function: {total_revenue_function:,.2f}")
 
 """
 Exercise 5.2
@@ -419,7 +425,7 @@ def total_revenue_scaling_factor(orders, scaling_factor, index=5):
     return sum(order[index] * scaling_factor for order in orders)
 
 
-scaling_factor = 0.95
+scaling_factor = 1.075
 orders_casted_scaling_factor = total_revenue_scaling_factor(
     orders_casted,
     scaling_factor

@@ -302,7 +302,6 @@ total_revenue_inflation_correction = sum(
 )
 print(f"Revenue after price change: €{total_revenue_inflation_correction:,.2f}.")
 
-
 """
 Exercise 4.7
 ============
@@ -333,7 +332,13 @@ format:
 > "Revenue after discount: €<total_revenue_discount>."
 """
 header_print("Exercise 4.8")
-total_revenue_discount = ...
+total_revenue_discount = sum(
+    (order[5] * .9) if order[1] < 18 else
+    (order[5] * .95) if order[1] > 65 else
+    (order[5] * 1.35)
+    for order in orders_casted
+)
+print(f"Revenue after discount: €{total_revenue_discount:,.2f}.")
 
 """
 Exercise 4.9
@@ -344,7 +349,7 @@ Calculate the difference in revenue again. However, this time, calculate the per
 """
 header_print("Exercise 4.9")
 # from .solutions.exercise_4_8 import total_revenue_discount
-revenue_difference_percent = ...
+revenue_difference_percent = 0
 
 """
 Exercise 4.10

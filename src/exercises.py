@@ -218,7 +218,9 @@ header_print("Exercise 2.1")
 @measure
 def print_orders_first_3(orders):
     for i in orders[:3]:
-        print(f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}.")
+        print(
+            f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}."
+        )
     return
 
 
@@ -248,10 +250,13 @@ What were the last 5 orders?
 """
 header_print("Exercise 2.2")
 
+
 @measure
 def print_orders_last_5(orders):
     for i in orders[-5:]:
-        print(f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}.")
+        print(
+            f"Customer {i[0]} got the haircut {i[4]} on {i[3]} for €{i[5]:.2f}."
+        )
     return
 
 
@@ -274,16 +279,42 @@ def print_orders_last_5_pandas(data_frame):
 orders_last_5_pd, t, m = print_orders_last_5_pandas(df)
 print_stats("Pandas method 'Tail'", df, t, m)
 
-
-
 """
 Exercise 2.3
 ============
 What was the 1000th order?
 """
 header_print("Exercise 2.3")
-order_1000 = orders_casted[999]
-print(f"Customer {order_1000[0]} got the haircut {order_1000[4]} on {order_1000[3]} for €{order_1000[5]:.2f}.")
+
+
+@measure
+def print_order_1000(orders):
+    order_1000 = orders[999]
+    print(
+        f"Customer {order_1000[0]} got the haircut {order_1000[4]}"
+        f" on {order_1000[3]} for €{order_1000[5]:.2f}."
+    )
+    return
+
+
+order_1000, t, m = print_order_1000(orders_casted)
+print_stats("Python method 'Slices'", clean_orders, t, m)
+
+
+# Extra
+
+@measure
+def print_order_1000_pandas(data_frame):
+    row = data_frame.iloc[999]
+    print(
+        f"Customer {row['name']} got the haircut {row['hairstyle']} "
+        f"on {row['date']} for €{row['cost']:.2f}."
+    )
+    return data_frame
+
+
+order_1000_pd, t, m = print_order_1000_pandas(df)
+print_stats("Pandas method 'iloc'", df, t, m)
 
 """
 Exercise 2.4

@@ -498,11 +498,44 @@ Exercise 4.1
 What was the total revenue in the data? Put this in a variable named `total_revenue`.
 """
 header_print("Exercise 4.1")
-total_revenue = sum(
-    order[5]
-    for order in orders_casted
+
+
+@measure
+def count_total_revenue(orders):
+    return sum(
+        order[5]
+        for order in orders_casted
+    )
+
+
+total_revenue, t, m = count_total_revenue(orders_casted)
+print(
+    f"Revenue: €{total_revenue:,.2f}."
 )
-print(f"Revenue: €{total_revenue:,.2f}.")
+print_stats(
+    "Python methods 'sum and for'",
+    orders_casted,
+    t,
+    m
+)
+
+
+# Extra
+
+@measure
+def count_total_revenue_pd(data_frame):
+    return df["cost"].sum()
+
+
+total_revenue_pd, t, m = count_total_revenue_pd(df)
+print(f"Revenue: €{total_revenue_pd:,.2f}.")
+print_stats(
+    "Pandas methods 'sum()'",
+    df,
+    t,
+    m
+)
+
 """
 Exercise 4.2
 ============
